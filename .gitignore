@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+*.db
+venv/
+.DS_Store
+the_state_machine.pdf
+the_state_machine
