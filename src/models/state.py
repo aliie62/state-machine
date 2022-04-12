@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-# DATABASE_URI = os.environ.get('DATABASE_URI','data.db')
+SM_DATABASE_URI = os.environ.get('SM_DATABASE_URI')
 
 class StateModel():
     _tablename = 'states'
@@ -17,7 +17,7 @@ class StateModel():
     
     @classmethod
     def get_current_state(cls)->"StateModel":
-        connection = sqlite3.connect('data.db')
+        connection = sqlite3.connect(SM_DATABASE_URI)
         cursor = connection.cursor()
         query = f"SELECT * FROM {cls._tablename} where is_active=True"
         row = cursor.execute(query).fetchone()
@@ -27,7 +27,7 @@ class StateModel():
 
     @classmethod
     def get_state_by_id(cls,state_id)->"StateModel":
-        connection = sqlite3.connect('data.db')
+        connection = sqlite3.connect(SM_DATABASE_URI)
         cursor = connection.cursor()
         query = f"SELECT * FROM {cls._tablename} where id=?"
         row = cursor.execute(query,(state_id,)).fetchone()
@@ -36,7 +36,7 @@ class StateModel():
         return state
 
     def update(self) -> None:
-        connection = sqlite3.connect('data.db')
+        connection = sqlite3.connect(SM_DATABASE_URI)
         cursor = connection.cursor()
         query = f"UPDATE {StateModel._tablename} SET is_active=? WHERE id=?"
         cursor.execute(query,(self.is_active,self.id))
@@ -44,7 +44,7 @@ class StateModel():
         connection.close()
     
     def insert(self)-> None:
-        connection = sqlite3.connect('data.db')
+        connection = sqlite3.connect(SM_DATABASE_URI)
         cursor = connection.cursor()
         query = f"INSERT INTO {StateModel._tablename} VALUES (?,?,?,?,?,?)"
         cursor.execute(query,(self.id,self.name,self.dest_1,self.dest_2,self.dest_3,self.is_active))

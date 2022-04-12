@@ -11,9 +11,6 @@ class StateResource():
             try:
                 current_state = StateModel.get_current_state()
                 new_state = cls.find_next(current_state,option)
-                if new_state.name == 'A':
-                    empty_table()
-                    fill_table()
             except:
                 return 'Server Error'
         else:
