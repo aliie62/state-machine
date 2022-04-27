@@ -1,7 +1,9 @@
 import unittest
-from context import StateModel
-import os
 import sqlite3
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.models.state import StateModel
 
 SM_DATABASE_URI = os.environ.get('SM_DATABASE_URI')
 os.remove(SM_DATABASE_URI)
